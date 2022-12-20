@@ -39,7 +39,7 @@ function Landing() {
         
       <Box style={styles.overlay}></Box>
       
-      <video style={styles.heroVid} src={bgVid} autoPlay loop muted />
+      <video style={styles.heroVid} src={bgVid} autoPlay loop muted playsInline/>
       
       <Grid container spacing={0} style={styles.content} direction="column">
       <Box style={styles.content}><LandingNavbar/></Box>
