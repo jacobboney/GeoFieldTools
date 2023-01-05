@@ -15,9 +15,9 @@ import HighlightOffIcon from "@mui/icons-material/HighlightOff";
 import React from "react";
 import { useDispatch } from "react-redux";
 
-import { updateFrom, updateTo, removeLayer } from "../redux/layerSlice";
+import { updateFrom, updateTo, removeLayer, updateMaterial, updateDiameter } from "../redux/layerSlice";
 
-export default function LayerCard({ id, from, to, material, index }) {
+export default function LayerCard({ id, from, to, material, diameter, index }) {
   const dispatch = useDispatch();
 
   const handleFromChange = (value) => {
@@ -26,9 +26,17 @@ export default function LayerCard({ id, from, to, material, index }) {
   const handleToChange = (value) => {
     dispatch(updateTo({ id, to: value }));
   };
+  const handleMaterialChange = (value) => {
+    dispatch(updateMaterial({id, material: value}));
+    console.log(value);
+  }; 
+  const handleDiameterChange = (value) => {
+    dispatch(updateDiameter({ id, diameter: value}));
+  };
   const handleRemoval = (id) => {
     dispatch(removeLayer({ id }));
   };
+
 
   return (
     <Grid container spacing={0} direction="column">
@@ -49,7 +57,7 @@ export default function LayerCard({ id, from, to, material, index }) {
                 handleRemoval(id);
               }}
             >
-              <HighlightOffIcon sx={{color: "#00003f"}} />
+              <HighlightOffIcon sx={{ color: "#00003f" }} />
             </IconButton>
           )}
         </CardContent>
@@ -84,7 +92,22 @@ export default function LayerCard({ id, from, to, material, index }) {
             </CardActions>
           </Grid>
 
-          <Grid item xs={12}>
+          <Grid item xs={4} md={5}>
+            <CardActions>
+              <TextField
+                id="diameter"
+                name="diameter"
+                label="Diameter"
+                size="small"
+                value={diameter}
+                onChange={(e) => {
+                  handleDiameterChange(e.target.value);
+                }}
+              ></TextField>
+            </CardActions>
+          </Grid>
+
+          <Grid item xs={6} md={7}>
             <CardActions>
               <FormControl fullWidth size="small">
                 <InputLabel id="demo-simple-select-label">
@@ -96,10 +119,13 @@ export default function LayerCard({ id, from, to, material, index }) {
                   name="material"
                   label="Material-Type"
                   value={material}
+                  onChange={(e) => {
+                    handleMaterialChange(e.target.value);
+                  }}
                 >
-                  <MenuItem value={0}>Rock</MenuItem>
-                  <MenuItem value={1}>Bentonite</MenuItem>
-                  <MenuItem value={2}>Grout</MenuItem>
+                  <MenuItem value={"Rock"}>Rock</MenuItem>
+                  <MenuItem value={"Bentonite"}>Bentonite</MenuItem>
+                  <MenuItem value={"Grout"}>Grout</MenuItem>
                 </Select>
               </FormControl>
             </CardActions>

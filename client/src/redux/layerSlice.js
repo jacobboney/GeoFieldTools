@@ -3,14 +3,15 @@ import { nanoid } from "nanoid";
 
 const layerSlice = createSlice({
     name: "layers",
-    initialState: [{id: nanoid(), from: "", to: "", material: ""},],
+    initialState: [{id: nanoid(), from: "", to: "", material: "", diameter: ""},],
     reducers: {
         addLayer: (state, action) => {
             const newLayer = {
                 id: nanoid(),
                 from: "", 
                 to: "", 
-                material: ""
+                material: "",
+                diameter: ""
             }
             state.push(newLayer);
         },
@@ -25,11 +26,19 @@ const layerSlice = createSlice({
             const index = state.findIndex((layers) => layers.id === action.payload.id);
             state[index].to = action.payload.to;
         },
+        updateMaterial: (state, action) => {
+            const index = state.findIndex((layers) => layers.id === action.payload.id);
+            state[index].material = action.payload.material;
+        },
+        updateDiameter: (state, action) => {
+            const index = state.findIndex((layers) => layers.id === action.payload.id);
+            state[index].diameter = action.payload.diameter;
+        },
     }
 
     }
 );
 
-export const { addLayer, updateFrom, updateTo, removeLayer } = layerSlice.actions;
+export const { addLayer, updateFrom, updateTo, updateMaterial, updateDiameter, removeLayer } = layerSlice.actions;
 
 export default layerSlice.reducer; 
