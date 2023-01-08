@@ -1,10 +1,11 @@
 import {configureStore} from '@reduxjs/toolkit';
-import layerReducer from './layerSlice';
+import layerSlice from './layerSlice';
+import layerResults from './layerResultSlice';
 
 
 export default configureStore({
     reducer: {
-        layers: layerReducer,
-        
+        layers: layerSlice,
+        layerResults: layerResults,
     },
 })

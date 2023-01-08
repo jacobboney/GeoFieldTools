@@ -15,7 +15,8 @@ import HighlightOffIcon from "@mui/icons-material/HighlightOff";
 import React from "react";
 import { useDispatch } from "react-redux";
 
-import { updateFrom, updateTo, removeLayer, updateMaterial, updateDiameter } from "../redux/layerSlice";
+import { updateFrom, updateTo, removeLayer, updateMaterial, updateDiameter } from "../../redux/layerSlice";
+import { removeResult } from "../../redux/layerResultSlice";
 
 export default function LayerCard({ id, from, to, material, diameter, index }) {
   const dispatch = useDispatch();
@@ -28,13 +29,16 @@ export default function LayerCard({ id, from, to, material, diameter, index }) {
   };
   const handleMaterialChange = (value) => {
     dispatch(updateMaterial({id, material: value}));
-    console.log(value);
+    
   }; 
   const handleDiameterChange = (value) => {
     dispatch(updateDiameter({ id, diameter: value}));
+    console.log(value);
   };
   const handleRemoval = (id) => {
     dispatch(removeLayer({ id }));
+    dispatch(removeResult({ id }));
+
   };
 
 
@@ -61,7 +65,7 @@ export default function LayerCard({ id, from, to, material, diameter, index }) {
             </IconButton>
           )}
         </CardContent>
-        <Grid container spacing={0}>
+        <Grid container spacing={0} sx={{mb:1}}>
           <Grid item xs={12} md={6}>
             <CardActions>
               <TextField

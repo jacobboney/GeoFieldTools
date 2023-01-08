@@ -21,6 +21,7 @@ const layerSlice = createSlice({
         updateFrom: (state, action) => {
             const index = state.findIndex((layers) => layers.id === action.payload.id);
             state[index].from = action.payload.from;
+            console.log(action.payload.from);
         },
         updateTo: (state, action) => {
             const index = state.findIndex((layers) => layers.id === action.payload.id);
