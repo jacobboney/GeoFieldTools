@@ -2,8 +2,8 @@ import React from "react";
 import Landing from "./pages/landing";
 import { Route, Routes } from "react-router-dom";
 import About from "./pages/about";
-import Abandawell from "./pages/abandawell";
 
+import WellAbandonment from "./pages/wellAbandonment";
 
 function App() {
   return (
@@ -11,7 +11,7 @@ function App() {
       <Routes>
         <Route path="/" element={ <Landing/> }/>
         <Route path="about" element={ <About/> }/>
-        <Route path="abandawell" element={ <Abandawell/> }/>
+        <Route path="well-abandonment" element={ <WellAbandonment/> }/>
       </Routes>
     </>
   );

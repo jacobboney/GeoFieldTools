@@ -1,19 +1,38 @@
 import React from "react";
-import { Box, Grid, IconButton, Typography } from "@mui/material";
+import { Box, Grid, IconButton, Typography, Button } from "@mui/material";
 import { Navbar } from "../components/navbar";
-import LayerCard from "../components/layerCard";
+import LayerCard from "../components/wellAbandonment/layerCard";
 import { useSelector, useDispatch } from "react-redux";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import { addLayer } from "../redux/layerSlice";
-import MaterialCalc from "../utilities/materialCalc";
 
-function Abandawell() {
-  const layers = useSelector((state) => state.layers);
+import { addResult, reset } from "../redux/layerResultSlice";
+import MaterialCalc from "../utilities/materialCalc";
+import LayerResults from "../components/wellAbandonment/layerResults";
+
+function WellAbandonment() {
+  const [layers, layerResults] = useSelector((state) => [
+    state.layers,
+    state.layerResults,
+  ]);
   const dispatch = useDispatch();
 
   const handleAddLayer = () => {
     dispatch(addLayer());
   };
+
+  const calculate = () =>{
+    dispatch(reset());
+    layers.forEach(element => {
+      const resultObj = MaterialCalc(element.id, element.diameter, element.from, element.to, element.material);
+      dispatch(addResult(resultObj))
+    });
+    layerResults.forEach(element => {
+      console.log(element.id, element.volume, element.amount);
+    });
+    
+  }
+
 
   return (
     <Box>
@@ -61,7 +80,7 @@ function Abandawell() {
             <Grid container item>
               <Box
                 component="form"
-                sx={{ maxHeight: { sm: "85vh" }, overflow: { sm: "auto" } }}
+                sx={{ maxHeight: { sm: "80vh" }, overflow: { sm: "auto" } }}
               >
                 {layers.map((layer, index) => (
                   <div key={index}>
@@ -75,6 +94,24 @@ function Abandawell() {
                     />
                   </div>
                 ))}
+              </Box>
+            </Grid>
+            <Grid container item justifyContent="center">
+              <Box>
+                <Button
+                  variant="outlined"
+                  sx={{
+                    color: "white",
+                    borderColor: "white",
+                    "&:hover": {},
+                    m: 1,
+                  }}
+                  onClick={() => {
+                    calculate();
+                  }}
+                >
+                  Calculate
+                </Button>
               </Box>
             </Grid>
           </Grid>
@@ -93,14 +130,23 @@ function Abandawell() {
             item
             sx={{ marginTop: "60px", alignContent: "start" }}
           >
-            <Grid container item sx={{ alignItems: "center" }}>
+            <Grid container item  sx={{ alignItems: "center" }}>
               <Grid item>
                 <Typography variant="h6" sx={{ m: 2, color: "black" }}>
                   Results:
                 </Typography>
               </Grid>
-              <Grid item>
-                <MaterialCalc/>
+              <Grid container item spacing={2} direction="column" sx={{m:2, pb:2}}>
+                {layerResults.map((results, index) => 
+                  (<LayerResults 
+                    id={results.id}
+                    volume={results.volume}
+                    amount={results.amount}
+                    index={index}
+                    key={index}
+                  />)
+                  
+                )}
               </Grid>
             </Grid>
           </Grid>
@@ -110,4 +156,5 @@ function Abandawell() {
   );
 }
 
-export default Abandawell;
+
+export default WellAbandonment;

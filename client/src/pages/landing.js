@@ -51,7 +51,7 @@ function Landing() {
           </Typography>
         </Grid>
         <Grid item>
-            <Button variant="contained" component={RouterLink} to="abandawell" >Explore<OutboundIcon fontSize="small" sx={{marginLeft: "10px"}}/></Button>
+            <Button variant="contained" component={RouterLink} to="well-abandonment" >Explore<OutboundIcon fontSize="small" sx={{marginLeft: "10px"}}/></Button>
         </Grid>
       </Grid>
     </Grid>
